@@ -1,9 +1,9 @@
-public with sharing class MaintainanceRequestHelper {
+public with sharing class MaintenanceRequestHelper {
 
 
 
 
-    public  static void methodCreateRecord(Map<Id , Case> mapp) {
+    public  static void methodCreateRecord(Map<Id , Case> mapp) { //trigger.newMap is in the parameter call ---> before update case object
             List<Case> listToBeInserted = new List<Case>();
             List<List<Id>> listOfList = new List<List<Id>>();
             Map<Id , Decimal> reqToCycleMap = new Map<Id , Decimal>();
@@ -19,7 +19,7 @@ public with sharing class MaintainanceRequestHelper {
                 }
 
             }
-             Map<Id ,Case> caseMap = new Map<Id,Case>([SELECT Id, Vehicle__c, Type , Product__c , Status, (SELECT Equipment__c FROM Equipment_Maintenance_Items__r) FROM Case WHERE Id IN :caseIdList]);
+             Map<Id ,Case> caseMap = new Map<Id,Case>([SELECT Id, Vehicle__c, Type , Product__c , Status, Date_Due__c,(SELECT Equipment__c FROM Equipment_Maintenance_Items__r) FROM Case WHERE Id IN :caseIdList]);
 
 
 
@@ -75,12 +75,12 @@ public with sharing class MaintainanceRequestHelper {
 
         }
 
-        public static void addMinCycleDayToCaseMapObjects(Map<Id , Case> caseMap,Map<Id,Decimal> reqToCycleMap){
-            for(Id item : caseMap.keySet()){
-                caseMap.get(item).Date_Due__c = Date.today().addDays((Integer)reqToCycleMap.get(item));
-            }
-            return;
-        }
+        // public static void addMinCycleDayToCaseMapObjects(Map<Id , Case> caseMap,Map<Id,Decimal> reqToCycleMap){
+        //     for(Id item : caseMap.keySet()){
+        //         caseMap.get(item).Date_Due__c = Date.today().addDays((Integer)reqToCycleMap.get(item));
+        //     }
+        //     return;
+        // }
 
 
 
